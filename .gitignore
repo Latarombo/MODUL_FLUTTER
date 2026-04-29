@@ -1,0 +1,15 @@
+# Flutter
+build/
+.dart_tool/
+.packages
+pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# exclude repo lain
+santarana/
