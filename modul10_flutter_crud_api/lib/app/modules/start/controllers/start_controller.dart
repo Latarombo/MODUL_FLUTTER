@@ -1,0 +1,36 @@
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:modul10_flutter_crud_api/app/data/user_model.dart';
+import 'package:modul10_flutter_crud_api/app/routes/app_pages.dart';
+import 'package:modul10_flutter_crud_api/services/auth_api.dart';
+
+class StartController extends GetxController {
+  UserModel? userModel;
+  final box = GetStorage();
+  bool startScreen = false;
+  autoLogin() async {
+    startScreen = false;
+    update();
+    if (box.hasData("token") == true) {
+      userModel = await AuthApi().checkTokenApi(box.read("token"));
+      if (userModel!.status == 200) {
+        Get.offAndToNamed(Routes.HOME);
+      } else if (userModel!.status == 404) {
+        startScreen = true;
+        update();
+      } else if (userModel!.status == 401) {
+        box.remove("token");
+        box.remove("id");
+        Get.offAndToNamed(Routes.LOGIN);
+      } else {
+        box.remove("token");
+        box.remove("id");
+        Get.offAndToNamed(Routes.LOGIN);
+      }
+    } else {
+      Get.offAndToNamed(Routes.LOGIN);
+    }
+  }
+}
