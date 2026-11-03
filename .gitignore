@@ -13,3 +13,7 @@ pubspec.lock
 
 # exclude repo lain
 santarana/
+santarana_getx/
+flutter_camera/
+flutter_checkbox/
+belajar_basic_layout/
